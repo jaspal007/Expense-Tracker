@@ -1,5 +1,6 @@
-import 'package:uuid/uuid.dart';
+//custom class to store all the data of a single expense
 
+import 'package:uuid/uuid.dart';
 import '../resources/global_variables.dart';
 
 const uuid = Uuid();

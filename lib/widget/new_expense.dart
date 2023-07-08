@@ -1,4 +1,5 @@
-// ignore_for_file: avoid_print
+//widget to validate and display fields to fill details of expense in the bottom sheet
+
 import 'package:expense_tracker/modal/expense.dart';
 import 'package:expense_tracker/widget/flutter_widget/alert_dialog.dart';
 import 'package:expense_tracker/widget/flutter_widget/text_field_input.dart';

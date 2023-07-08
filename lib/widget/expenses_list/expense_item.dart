@@ -1,6 +1,7 @@
+//Card returning widget that displays one single expense on the main screen
+
 import 'package:expense_tracker/resources/global_variables.dart';
 import 'package:flutter/material.dart';
-
 import '../../modal/expense.dart';
 
 class ExpensesItem extends StatelessWidget {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../modal/expense.dart';
+//Global variable resource of the Expense_Tracker file
 
+import '../modal/expense.dart';
 final formatted = DateFormat.yMMMd();
 enum Category { food, travel, work, leisure }
 
