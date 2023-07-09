@@ -1,5 +1,6 @@
 //widget to validate and display fields to fill details of expense in the bottom sheet
 
+import 'package:expense_tracker/main.dart';
 import 'package:expense_tracker/modal/expense.dart';
 import 'package:expense_tracker/widget/flutter_widget/alert_dialog.dart';
 import 'package:expense_tracker/widget/flutter_widget/text_field_input.dart';
@@ -36,8 +37,9 @@ class _NewExpenseState extends State<NewExpense> {
       showDialog(
         context: context,
         builder: (ctx) => const AlertDialogBox(
-          content: 'Invalid Data',
-          actions: ['Cancel', 'OK'],
+          title: 'Invalid Data',
+          content: 'Please enter the correct data!',
+          actions: ['OK'],
         ),
       );
       return false;
@@ -94,7 +96,13 @@ class _NewExpenseState extends State<NewExpense> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(formatted.format(_dateTime!)),
+                  Text(
+                    formatted.format(_dateTime!),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: (ThemeMode.system == ThemeMode.dark)
+                            ? kDarkColorScheme.onInverseSurface
+                            : Theme.of(context).textTheme.bodyMedium!.color),
+                  ),
                   IconButton(
                     onPressed: _datePicker,
                     icon: const Icon(Icons.calendar_month_rounded),
@@ -147,7 +155,11 @@ class _NewExpenseState extends State<NewExpense> {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 235, 209, 240)),
+                          kColorScheme.tertiary,
+                        ),
+                        foregroundColor: MaterialStateProperty.all(
+                          kColorScheme.primaryContainer,
+                        ),
                       ),
                       child: const Text('Save'),
                     ),

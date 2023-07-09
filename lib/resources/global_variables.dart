@@ -4,7 +4,11 @@ import 'package:intl/intl.dart';
 //Global variable resource of the Expense_Tracker file
 
 import '../modal/expense.dart';
+
+// ThemeMode themeMode = ThemeMode.light;
+
 final formatted = DateFormat.yMMMd();
+
 enum Category { food, travel, work, leisure }
 
 const categoryIcon = {
@@ -15,22 +19,22 @@ const categoryIcon = {
 };
 
 List<Expense> registeredExpense = [
-    Expense(
-      title: 'Flutter Course',
-      amount: 399,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
-      title: 'Shopping',
-      amount: 1599,
-      date: DateTime.now(),
-      category: Category.leisure,
-    ),
-    Expense(
-      title: 'Family Nighout',
-      amount: 809.15,
-      date: DateTime.now(),
-      category: Category.food,
-    ),
-  ];
+  Expense(
+    title: 'Flutter Course',
+    amount: 399,
+    date: DateTime.now(),
+    category: Category.work,
+  ),
+  Expense(
+    title: 'Shopping',
+    amount: 1599,
+    date: DateTime.now(),
+    category: Category.leisure,
+  ),
+  Expense(
+    title: 'Family Nighout',
+    amount: 809.15,
+    date: DateTime.now(),
+    category: Category.food,
+  ),
+];

@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import '../modal/expense.dart';
 
 class Expenses extends StatefulWidget {
-  const Expenses({super.key});
-
+  const Expenses({
+    super.key,
+  });
   @override
   State<Expenses> createState() => _ExpensesState();
 }
@@ -27,12 +28,20 @@ class _ExpensesState extends State<Expenses> {
       registeredExpense.remove(expense);
     });
     final SnackBar snackBar = SnackBar(
-      content: Text(
-        '${expense.title} has been deleted',
-        style: const TextStyle(color: Colors.black87),
+      content: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '${expense.title} ',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const TextSpan(text: 'has been deleted'),
+          ],
+        ),
       ),
       duration: const Duration(seconds: 2),
-      backgroundColor: Colors.purple.shade50,
       action: SnackBarAction(
           label: 'Undo',
           onPressed: () {
@@ -63,7 +72,7 @@ class _ExpensesState extends State<Expenses> {
     void overlayView() {
       showModalBottomSheet(
         isScrollControlled: true,
-        showDragHandle: true,
+        useSafeArea: true,
         context: context,
         builder: (ctx) => NewExpense(
           onAddExpense: addExpense,
@@ -74,6 +83,14 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          // IconButton(
+          //   onPressed: () => widget.onThemeChange,
+          //   icon: Icon(
+          //     (themeMode == ThemeMode.light)
+          //         ? Icons.wb_sunny_rounded
+          //         : Icons.nightlight_rounded,
+          //   ),
+          // ),
           IconButton(
             onPressed: overlayView, //to display the bottom sheet
             icon: const Icon(Icons.add),

@@ -1,5 +1,6 @@
 //custom textfield for the bottom sheet
 
+import 'package:expense_tracker/main.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -48,12 +49,31 @@ class _TextFieldInputState extends State<TextFieldInput> {
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderSide: const BorderSide(style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(50),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: BorderSide(color: kColorScheme.inversePrimary),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: BorderSide(color: kColorScheme.inversePrimary, width: 2),
+        ),
         prefixText: prefixText,
+        prefixStyle: TextStyle(
+            color: (ThemeMode.system == ThemeMode.light)
+                ? kColorScheme.tertiary
+                : kDarkColorScheme.tertiary),
         labelText: labelText,
+        labelStyle: TextStyle(
+            color: (ThemeMode.system == ThemeMode.light)
+                ? kColorScheme.tertiary
+                : kDarkColorScheme.tertiary),
         hintText: hintText,
+        hintStyle: TextStyle(
+            color: (ThemeMode.system == ThemeMode.light)
+                ? kColorScheme.tertiary
+                : kDarkColorScheme.tertiary),
         suffixIcon: _showClearButton
             ? IconButton(
                 onPressed: () {
