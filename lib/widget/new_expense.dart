@@ -30,6 +30,16 @@ class _NewExpenseState extends State<NewExpense> {
     _title.dispose();
   }
 
+  Color? onThemeMode() {
+    Color? color;
+    setState(() {
+      color = (ThemeMode.system == ThemeMode.dark)
+          ? kDarkColorScheme.onInverseSurface
+          : Theme.of(context).textTheme.bodyMedium!.color;
+    });
+    return color;
+  }
+
   bool? submitExpenseData() {
     final enteredAmount = double.tryParse(_amount.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount < 0;
@@ -99,9 +109,8 @@ class _NewExpenseState extends State<NewExpense> {
                   Text(
                     formatted.format(_dateTime!),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: (ThemeMode.system == ThemeMode.dark)
-                            ? kDarkColorScheme.onInverseSurface
-                            : Theme.of(context).textTheme.bodyMedium!.color),
+                          color: onThemeMode(),
+                        ),
                   ),
                   IconButton(
                     onPressed: _datePicker,

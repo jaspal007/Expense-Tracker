@@ -11,6 +11,8 @@ final formatted = DateFormat.yMMMd();
 
 enum Category { food, travel, work, leisure }
 
+enum BackgroundColors { yellow, purple, green, blue, pink }
+
 const categoryIcon = {
   Category.food: Icons.lunch_dining_rounded,
   Category.travel: Icons.flight_takeoff_rounded,

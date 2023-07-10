@@ -1,3 +1,4 @@
+import 'package:expense_tracker/resources/global_variables.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/expenses.dart';
@@ -14,27 +15,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // void setTheme() {
-  //   setState(() {
-  //     themeMode == ThemeMode.system;
-  //   });
-  // }
+  void setSeedColor() {
+    seedColor.value = backGround[backgroundColors.value]!;
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.system,
-      theme: themeDataLight,
-      darkTheme: themeDataDark,
-      debugShowCheckedModeBanner: false,
-      home: const Expenses(),
+    return ValueListenableBuilder<Color>(
+      valueListenable: seedColor,
+      builder: (context, Color color, child) {
+        return MaterialApp(
+          themeMode: ThemeMode.system,
+          theme: themeDataLight,
+          darkTheme: themeDataDark,
+          debugShowCheckedModeBanner: false,
+          home: Expenses(
+            backgroundColors: backgroundColors.value,
+            onColorchange: setSeedColor,
+          ),
+        );
+      },
     );
   }
 }
 
+Map<BackgroundColors, Color> backGround = {
+  BackgroundColors.yellow: const Color.fromRGBO(255, 227, 146, 1),
+  BackgroundColors.purple: const Color.fromARGB(255, 226, 192, 233),
+  BackgroundColors.green: const Color.fromARGB(255, 172, 227, 174),
+  BackgroundColors.blue: const Color.fromARGB(255, 158, 197, 229),
+  BackgroundColors.pink: const Color.fromARGB(255, 224, 170, 188),
+};
+
+final ValueNotifier<BackgroundColors> backgroundColors =
+    ValueNotifier(BackgroundColors.blue);
+ValueNotifier<Color> seedColor =
+    ValueNotifier(backGround[backgroundColors.value]!);
+
 //light theme
 final kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromRGBO(250, 227, 146, 1),
+  seedColor: seedColor.value,
 );
 
 final ThemeData themeDataLight = ThemeData().copyWith(
@@ -73,6 +94,22 @@ final ThemeData themeDataLight = ThemeData().copyWith(
           //backgroundColor: Colors.blue,
         ),
       ),
+  inputDecorationTheme: const InputDecorationTheme().copyWith(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: BorderSide(color: kColorScheme.inversePrimary),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: BorderSide(color: kColorScheme.inversePrimary, width: 2),
+    ),
+    prefixStyle: TextStyle(color: kColorScheme.tertiary),
+    labelStyle: TextStyle(color: kColorScheme.tertiary),
+    hintStyle: TextStyle(color: kColorScheme.tertiary),
+  ),
   snackBarTheme: const SnackBarThemeData().copyWith(
     backgroundColor: kColorScheme.onSecondaryContainer,
   ),
@@ -85,7 +122,7 @@ final ThemeData themeDataLight = ThemeData().copyWith(
 //dark theme
 final kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: const Color.fromRGBO(250, 227, 146, 1),
+  seedColor: seedColor.value,
 );
 
 final ThemeData themeDataDark = ThemeData.dark().copyWith(
@@ -112,7 +149,7 @@ final ThemeData themeDataDark = ThemeData.dark().copyWith(
   ),
   textTheme: ThemeData().textTheme.copyWith(
         bodyLarge: TextStyle(
-          color: kDarkColorScheme.tertiary,
+          color: kDarkColorScheme.tertiaryContainer,
           //backgroundColor: Colors.green,
         ),
         bodyMedium: TextStyle(
@@ -120,20 +157,43 @@ final ThemeData themeDataDark = ThemeData.dark().copyWith(
           //backgroundColor: Colors.red,
         ),
         bodySmall: TextStyle(
-          color: kDarkColorScheme.tertiary,
+          color: kDarkColorScheme.onInverseSurface,
           //backgroundColor: Colors.blue,
         ),
       ),
+  dialogTheme:
+      const DialogTheme().copyWith(backgroundColor: kDarkColorScheme.tertiary),
   snackBarTheme: const SnackBarThemeData().copyWith(
     backgroundColor: kDarkColorScheme.onSecondaryContainer,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
-        Radius.circular(10),
+        Radius.circular(20),
       ),
     ),
   ),
+  inputDecorationTheme: const InputDecorationTheme().copyWith(
+    suffixIconColor: kDarkColorScheme.onInverseSurface,
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: BorderSide(color: kDarkColorScheme.inversePrimary),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: BorderSide(color: kDarkColorScheme.inversePrimary, width: 2),
+    ),
+    prefixStyle: TextStyle(color: kDarkColorScheme.tertiaryContainer),
+    labelStyle: TextStyle(color: kDarkColorScheme.tertiaryContainer),
+    hintStyle: TextStyle(color: kDarkColorScheme.tertiaryContainer),
+  ),
+  iconTheme:
+      const IconThemeData().copyWith(color: kDarkColorScheme.onInverseSurface),
   bottomSheetTheme: const BottomSheetThemeData().copyWith(
-    backgroundColor: kDarkColorScheme.tertiaryContainer,
+    backgroundColor: kDarkColorScheme.secondary,
     showDragHandle: true,
   ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
+      elevation: 20,
+      backgroundColor: kDarkColorScheme.onPrimaryContainer,
+      foregroundColor: kDarkColorScheme.onInverseSurface),
 );
