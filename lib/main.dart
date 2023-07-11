@@ -52,7 +52,7 @@ Map<BackgroundColors, Color> backGround = {
 };
 
 final ValueNotifier<BackgroundColors> backgroundColors =
-    ValueNotifier(BackgroundColors.yellow);
+    ValueNotifier(BackgroundColors.pink);
 ValueNotifier<Color> seedColor =
     ValueNotifier(backGround[backgroundColors.value]!);
 

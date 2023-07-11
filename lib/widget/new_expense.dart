@@ -100,196 +100,200 @@ class _NewExpenseState extends State<NewExpense> {
         print(constraints.maxHeight);
         final width = constraints.maxWidth;
 
-        return SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(32, 16, 32, keyboard + 16),
-              child: Column(
-                children: [
-                  if (width >= 600)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: TextFieldInput(
-                            controller: _title,
-                            labelText: 'Expense Title',
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 24,
-                        ),
-                        Expanded(
-                          child: TextFieldInput(
-                              controller: _amount,
-                              labelText: 'Expense Amount',
-                              prefixText: '₹ ',
-                              textInputType: TextInputType.number),
-                        ),
-                      ],
-                    )
-                  else
-                    TextFieldInput(
-                      controller: _title,
-                      labelText: 'Expense Title',
-                    ),
-                  if (width >= 600)
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: DropdownButton(
-                            value: _category,
-                            items: Category.values.map((value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value.name.toUpperCase()),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value != null) {
-                                  _category = value;
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              formatted.format(_dateTime!),
-                            ),
-                            IconButton(
-                              onPressed: _datePicker,
-                              icon: const Icon(Icons.calendar_month_rounded),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  else
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: TextFieldInput(
-                              controller: _amount,
-                              labelText: 'Expense Amount',
-                              prefixText: '₹ ',
-                              textInputType: TextInputType.number),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              formatted.format(_dateTime!),
-                            ),
-                            IconButton(
-                              onPressed: _datePicker,
-                              icon: const Icon(Icons.calendar_month_rounded),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  if (width >= 600)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancel'),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            final ans = submitExpenseData();
-                            if (ans!) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pop(context);
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              kColorScheme.tertiary,
-                            ),
-                            foregroundColor: MaterialStateProperty.all(
-                              kColorScheme.primaryContainer,
-                            ),
-                          ),
-                          child: const Text('Save'),
-                        ),
-                      ],
-                    )
-                  else
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
+        return SafeArea(
+          child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(32, 16, 32, keyboard + 16),
+                child: Column(
+                  children: [
+                    if (width >= 600)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DropdownButton(
-                            value: _category,
-                            items: Category.values.map((value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value.name.toUpperCase()),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value != null) {
-                                  _category = value;
-                                }
-                              });
-                            },
+                          Expanded(
+                            child: TextFieldInput(
+                              controller: _title,
+                              labelText: 'Expense Title',
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 24,
+                          ),
+                          Expanded(
+                            child: TextFieldInput(
+                                controller: _amount,
+                                labelText: 'Expense Amount',
+                                prefixText: '₹ ',
+                                textInputType: TextInputType.number),
+                          ),
+                        ],
+                      )
+                    else
+                      TextFieldInput(
+                        controller: _title,
+                        labelText: 'Expense Title',
+                      ),
+                    if (width >= 600)
+                      Row(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DropdownButton(
+                              value: _category,
+                              items: Category.values.map((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.name.toUpperCase()),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value != null) {
+                                    _category = value;
+                                  }
+                                });
+                              },
+                            ),
                           ),
                           const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              ElevatedButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancel'),
+                              Text(
+                                formatted.format(_dateTime!),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              IconButton(
+                                onPressed: _datePicker,
+                                icon: const Icon(Icons.calendar_month_rounded),
                               ),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  final ans = submitExpenseData();
-                                  if (ans!) {
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    kColorScheme.tertiary,
-                                  ),
-                                  foregroundColor: MaterialStateProperty.all(
-                                    kColorScheme.primaryContainer,
-                                  ),
-                                ),
-                                child: const Text('Save'),
+                            ],
+                          ),
+                        ],
+                      )
+                    else
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextFieldInput(
+                                controller: _amount,
+                                labelText: 'Expense Amount',
+                                prefixText: '₹ ',
+                                textInputType: TextInputType.number),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                formatted.format(_dateTime!),
+                              ),
+                              IconButton(
+                                onPressed: _datePicker,
+                                icon: const Icon(Icons.calendar_month_rounded),
                               ),
                             ],
                           ),
                         ],
                       ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                     ),
-                ],
+                    if (width >= 600)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final ans = submitExpenseData();
+                              if (ans!) {
+                                // ignore: use_build_context_synchronously
+                                Navigator.pop(context);
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                kColorScheme.tertiary,
+                              ),
+                              foregroundColor: MaterialStateProperty.all(
+                                kColorScheme.primaryContainer,
+                              ),
+                            ),
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            DropdownButton(
+                              value: _category,
+                              items: Category.values.map((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.name.toUpperCase()),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value != null) {
+                                    _category = value;
+                                  }
+                                });
+                              },
+                            ),
+                            const Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.0),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    final ans = submitExpenseData();
+                                    if (ans!) {
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      kColorScheme.tertiary,
+                                    ),
+                                    foregroundColor: MaterialStateProperty.all(
+                                      kColorScheme.primaryContainer,
+                                    ),
+                                  ),
+                                  child: const Text('Save'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

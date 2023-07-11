@@ -66,26 +66,31 @@ class _ExpensesState extends State<Expenses> {
     Widget mainContent = const Text('Nothing to display');
     if (registeredExpense.isNotEmpty) {
       mainContent = (width < 600)
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Chart(expenses: registeredExpense),
-                ExpensesList(
-                  data: registeredExpense,
-                  onRemoveExpense: removeExpense,
-                ),
-              ],
+          ? SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Chart(expenses: registeredExpense),
+                  ExpensesList(
+                    data: registeredExpense,
+                    onRemoveExpense: removeExpense,
+                  ),
+                ],
+              ),
             )
-          : Row(
-              children: [
-                Expanded(
-                  child: Chart(expenses: registeredExpense),
-                ),
-                ExpensesList(
-                  data: registeredExpense,
-                  onRemoveExpense: removeExpense,
-                ),
-              ],
+          : SafeArea(
+              left: false,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Chart(expenses: registeredExpense),
+                  ),
+                  ExpensesList(
+                    data: registeredExpense,
+                    onRemoveExpense: removeExpense,
+                  ),
+                ],
+              ),
             );
     }
 
