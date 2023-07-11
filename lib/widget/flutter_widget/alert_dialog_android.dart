@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class AlertDialogBox extends StatefulWidget {
-  const AlertDialogBox({
+class AlertDialogAndroid extends StatefulWidget {
+  const AlertDialogAndroid({
     super.key,
     required this.title,
     required this.content,
@@ -13,10 +13,10 @@ class AlertDialogBox extends StatefulWidget {
   final String content;
   final List<String> actions;
   @override
-  State<AlertDialogBox> createState() => _AlertDialogBoxState();
+  State<AlertDialogAndroid> createState() => _AlertDialogAndroidState();
 }
 
-class _AlertDialogBoxState extends State<AlertDialogBox> {
+class _AlertDialogAndroidState extends State<AlertDialogAndroid> {
   String get title => widget.title;
   String get content => widget.content;
   List<String> get actions => widget.actions;

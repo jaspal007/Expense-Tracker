@@ -15,8 +15,8 @@ class Expenses extends StatefulWidget {
     required this.backgroundColors,
     required this.onColorchange,
   });
-  BackgroundColors backgroundColors;
-  final Function onColorchange;
+  ValueNotifier<BackgroundColors> backgroundColors;
+  final Function(BackgroundColors backgroundColors) onColorchange;
   @override
   State<Expenses> createState() => _ExpensesState();
 }
@@ -62,22 +62,36 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     Widget mainContent = const Text('Nothing to display');
     if (registeredExpense.isNotEmpty) {
-      mainContent = Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Chart(expenses: registeredExpense),
-          ExpensesList(
-            data: registeredExpense,
-            onRemoveExpense: removeExpense,
-          ),
-        ],
-      );
+      mainContent = (width < 600)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Chart(expenses: registeredExpense),
+                ExpensesList(
+                  data: registeredExpense,
+                  onRemoveExpense: removeExpense,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Chart(expenses: registeredExpense),
+                ),
+                ExpensesList(
+                  data: registeredExpense,
+                  onRemoveExpense: removeExpense,
+                ),
+              ],
+            );
     }
 
     void overlayView() {
       showModalBottomSheet(
+        showDragHandle: true,
         isScrollControlled: true,
         useSafeArea: true,
         context: context,
@@ -88,10 +102,11 @@ class _ExpensesState extends State<Expenses> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           PopupMenuButton(
-            initialValue: widget.backgroundColors,
+            initialValue: widget.backgroundColors.value,
             itemBuilder: (context) => BackgroundColors.values
                 .map(
                   (value) => PopupMenuItem(
@@ -105,18 +120,16 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.format_paint),
             onSelected: (value) {
               setState(() {
-                widget.backgroundColors = value;
+                widget.backgroundColors.value = value;
               });
-              widget.onColorchange();
+              widget.onColorchange(value);
             },
           ),
         ],
         title: const Text('Expense Tracker'),
         centerTitle: true,
       ),
-      body: Center(
-        child: mainContent,
-      ),
+      body: mainContent,
       floatingActionButton: FloatingActionButton(
         onPressed: overlayView,
         child: const Icon(Icons.add),

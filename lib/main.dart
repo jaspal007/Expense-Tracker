@@ -15,23 +15,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void setSeedColor() {
-    seedColor.value = backGround[backgroundColors.value]!;
+  void setSeedColor(BackgroundColors value) {
+    setState(() {
+      backgroundColors.value = value;
+      seedColor.value = backGround[backgroundColors.value]!;
+      print(seedColor.toString());
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Color>(
-      valueListenable: seedColor,
-      builder: (context, Color color, child) {
+    return ValueListenableBuilder<BackgroundColors>(
+      valueListenable: backgroundColors,
+      builder: (context, BackgroundColors colors, child) {
         return MaterialApp(
           themeMode: ThemeMode.system,
           theme: themeDataLight,
           darkTheme: themeDataDark,
           debugShowCheckedModeBanner: false,
           home: Expenses(
-            backgroundColors: backgroundColors.value,
+            backgroundColors: backgroundColors,
             onColorchange: setSeedColor,
           ),
         );
@@ -41,15 +44,15 @@ class _MyAppState extends State<MyApp> {
 }
 
 Map<BackgroundColors, Color> backGround = {
-  BackgroundColors.yellow: const Color.fromRGBO(255, 227, 146, 1),
-  BackgroundColors.purple: const Color.fromARGB(255, 226, 192, 233),
-  BackgroundColors.green: const Color.fromARGB(255, 172, 227, 174),
-  BackgroundColors.blue: const Color.fromARGB(255, 158, 197, 229),
-  BackgroundColors.pink: const Color.fromARGB(255, 224, 170, 188),
+  BackgroundColors.yellow: const Color(0xFFFFE392),
+  BackgroundColors.purple: const Color(0xFFE2C0E9),
+  BackgroundColors.green: const Color(0xFFACE3AE),
+  BackgroundColors.blue: const Color(0xFF9EC5E5),
+  BackgroundColors.pink: const Color(0xFFE0AABC),
 };
 
 final ValueNotifier<BackgroundColors> backgroundColors =
-    ValueNotifier(BackgroundColors.blue);
+    ValueNotifier(BackgroundColors.yellow);
 ValueNotifier<Color> seedColor =
     ValueNotifier(backGround[backgroundColors.value]!);
 
@@ -114,8 +117,10 @@ final ThemeData themeDataLight = ThemeData().copyWith(
     backgroundColor: kColorScheme.onSecondaryContainer,
   ),
   bottomSheetTheme: const BottomSheetThemeData().copyWith(
-    backgroundColor: kColorScheme.onTertiary,
+    constraints: const BoxConstraints.expand(),
+    backgroundColor: kColorScheme.secondaryContainer,
     showDragHandle: true,
+    dragHandleColor: kColorScheme.onBackground,
   ),
 );
 
@@ -189,8 +194,10 @@ final ThemeData themeDataDark = ThemeData.dark().copyWith(
   iconTheme:
       const IconThemeData().copyWith(color: kDarkColorScheme.onInverseSurface),
   bottomSheetTheme: const BottomSheetThemeData().copyWith(
+    constraints: const BoxConstraints.expand(),
     backgroundColor: kDarkColorScheme.secondary,
-    showDragHandle: true,
+    showDragHandle: false,
+    dragHandleColor: kDarkColorScheme.background,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
       elevation: 20,

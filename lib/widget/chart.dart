@@ -41,7 +41,9 @@ class Chart extends StatelessWidget {
         horizontal: 8,
       ),
       width: double.infinity,
-      height: 180,
+      height: (MediaQuery.of(context).orientation == Orientation.portrait)
+          ? 180
+          : double.infinity - MediaQuery.of(context).viewInsets.bottom,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
