@@ -32,8 +32,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(
@@ -48,8 +46,8 @@ class Chart extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            Theme.of(context).colorScheme.primary.withOpacity(0.0)
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(1),
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(0)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -79,12 +77,7 @@ class Chart extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: Icon(
                         categoryIcon[bucket.category],
-                        color: isDarkMode
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.7),
+                        color: Theme.of(context).colorScheme.primary.withOpacity(1),
                       ),
                     ),
                   ),

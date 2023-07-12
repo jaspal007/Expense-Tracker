@@ -15,7 +15,8 @@ class Expenses extends StatefulWidget {
     required this.backgroundColors,
     required this.onColorchange,
   });
-  ValueNotifier<BackgroundColors> backgroundColors;
+  BackgroundColors backgroundColors;
+  //ValueNotifier<BackgroundColors> backgroundColors;
   final Function(BackgroundColors backgroundColors) onColorchange;
   @override
   State<Expenses> createState() => _ExpensesState();
@@ -62,6 +63,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    BackgroundColors color = widget.backgroundColors;
     final width = MediaQuery.of(context).size.width;
     Widget mainContent = const Text('Nothing to display');
     if (registeredExpense.isNotEmpty) {
@@ -111,7 +113,7 @@ class _ExpensesState extends State<Expenses> {
       appBar: AppBar(
         actions: [
           PopupMenuButton(
-            initialValue: widget.backgroundColors.value,
+            initialValue: color,
             itemBuilder: (context) => BackgroundColors.values
                 .map(
                   (value) => PopupMenuItem(
@@ -125,7 +127,7 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.format_paint),
             onSelected: (value) {
               setState(() {
-                widget.backgroundColors.value = value;
+                color = value;
               });
               widget.onColorchange(value);
             },

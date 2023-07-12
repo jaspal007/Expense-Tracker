@@ -5,7 +5,13 @@ import 'package:intl/intl.dart';
 
 import '../modal/expense.dart';
 
-// ThemeMode themeMode = ThemeMode.light;
+Map<BackgroundColors, Color> backGround = {
+  BackgroundColors.yellow: const Color(0xFFFFE392),
+  BackgroundColors.purple: const Color(0xFFE2C0E9),
+  BackgroundColors.green: const Color(0xFFACE3AE),
+  BackgroundColors.blue: const Color(0xFF9EC5E5),
+  BackgroundColors.pink: const Color(0xFFE0AABC),
+};
 
 final formatted = DateFormat.yMMMd();
 
